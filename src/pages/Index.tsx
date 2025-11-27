@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -14,6 +14,25 @@ const Index = () => {
     contact: '',
     message: ''
   });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +53,7 @@ const Index = () => {
         <div className="absolute bottom-20 right-10 text-4xl">✨</div>
       </div>
 
-      <header className="container mx-auto px-4 py-8">
+      <header className="container mx-auto px-4 py-8 animate-fade-in">
         <nav className="flex justify-center gap-8 text-sm uppercase tracking-widest">
           <a href="#about" className="hover:text-primary transition-colors">Обо мне</a>
           <a href="#services" className="hover:text-primary transition-colors">Услуги</a>
@@ -44,7 +63,7 @@ const Index = () => {
       </header>
 
       <section className="container mx-auto px-4 py-20 text-center relative">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto animate-scale-in">
           <p className="text-sm uppercase tracking-[0.3em] mb-4 text-bronze">Астролог</p>
           <h1 className="text-7xl md:text-8xl font-light mb-6 text-primary">
             Марина<br />Новикова
@@ -67,7 +86,7 @@ const Index = () => {
       </section>
 
       <section id="services" className="container mx-auto px-4 py-20">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto animate-on-scroll opacity-0">
           <Button 
             variant="outline" 
             className="w-full mb-8 rounded-full py-6 text-xl border-2 border-primary bg-transparent hover:bg-primary/10"
@@ -79,7 +98,7 @@ const Index = () => {
       </section>
 
       <section id="about" className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto animate-on-scroll opacity-0">
           <h2 className="text-6xl font-light text-center mb-16 text-primary">Обо мне</h2>
           
           <Card className="bg-card border-2 border-primary rounded-3xl mb-8">
@@ -130,7 +149,7 @@ const Index = () => {
       </section>
 
       <section className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto animate-on-scroll opacity-0">
           <h2 className="text-5xl md:text-6xl font-light text-center mb-16 text-primary">
             Запросы, с которыми<br />я работаю
           </h2>
@@ -155,7 +174,7 @@ const Index = () => {
       </section>
 
       <section className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto animate-on-scroll opacity-0">
           <h2 className="text-5xl md:text-6xl font-light text-center mb-16 text-primary">Мои услуги</h2>
           
           <Accordion type="single" collapsible className="space-y-4">
@@ -262,7 +281,7 @@ const Index = () => {
       </section>
 
       <section id="faq" className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto animate-on-scroll opacity-0">
           <h2 className="text-5xl md:text-6xl font-light text-center mb-16 text-primary">
             Часто задаваемые<br />вопросы
           </h2>
@@ -305,7 +324,7 @@ const Index = () => {
       </section>
 
       <section id="contact" className="container mx-auto px-4 py-20">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto animate-on-scroll opacity-0">
           <h2 className="text-5xl md:text-6xl font-light text-center mb-16 text-primary">Контакты</h2>
           
           <Card className="bg-card border-2 border-primary rounded-3xl">
